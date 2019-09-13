@@ -137,7 +137,7 @@ EpiCurve(DF,
 
 ## Cas 5: Données mensuelles agrégées avec factors
 ```{r, echo=FALSE}
-DF <- read.csv2("cas_date_osea_mois.csv", stringsAsFactors=FALSE)
+DF <- read.csv2("cas_date_osea_mois.csv", stringsAsFactors=FALSE, fileEncoding="latin1")
 #DF$date <- as.Date(paste(DF$date,"-01",sep=""))
 #DF <- DF[1:2, ]
 kable(DF)
@@ -153,7 +153,7 @@ EpiCurve(DF,
          freq = "value",
          period = "month",
          cutvar = "factor",
-         cutorder = c( "Validé","Invalidé"),
+         cutorder = c( "Valid","Invalid"),
          colors=c("#990000", "#009900"),
          ylabel="Nombre de cas",
          xlabel=sprintf("Du %s au %s", min(DF$date), max(DF$date)),

@@ -1,0 +1,34 @@
+---
+title: "Fourmis"
+author: "Jean Pierre Decrorps"
+date: "22 septembre 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(EpiCurve)
+library(dplyr)
+
+Fourmis <- read.csv2("fourmi_data.csv") %>%
+  filter(slide2 > 50) %>%   #filtered dataframe
+  arrange(slide2) %>%     #now it will be filted and sorted by column slide2
+  select(sys_last_mod_date,slide2) %>%    #Filtered AND Selected columns only
+  mutate(slide2 = as.integer(slide2 / 10)) %>%
+  mutate(sys_last_mod_date = as.Date(sys_last_mod_date)) %>%
+  group_by(sys_last_mod_date) %>%
+  summarise(slide2 = sum(slide2)) %>%
+  as.data.frame()
+
+```
+
+## got two columns of data let's make an epicurve
+
+```{r}
+EpiCurve(Fourmis, date="sys_last_mod_date", freq="slide2", period="day", split=6)
+```
+
